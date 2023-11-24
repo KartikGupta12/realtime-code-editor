@@ -4,12 +4,16 @@ const http = require('http');
 const path = require('path');
 const { Server } = require('socket.io');
 const ACTIONS = require('./src/Actions');
+const cors= require('cors');
 
+
+app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server);
 
 app.use(express.static('build'));
 app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Credentials","true");
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
